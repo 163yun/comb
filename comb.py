@@ -7,10 +7,6 @@ import requests
 from tabulate import tabulate
 import click
 
-
-# curl  'http://10.180.2.112:9800//networks/067d4c55e93e42eca837d1c7a1a74ce8/vxlan' -X GET \
-# -H "Accept: application/json" -H "X-Auth-Token: 8b9a419ffcc64926b4ae6a4337c0155c"   |jq
-
 # user token
 HEADERS = {'Content-type': 'application/json'}
 ENV = 'https://open.c.163.com'
@@ -39,6 +35,29 @@ def get_images(token):
     r = requests.get(ENV + '/api/v1/containers/images', headers=headers)
     result_json = json.loads(r.text)
     return result_json
+
+
+def get_containers(token):
+    headers = {'Content-type': 'application/json',
+               'Authorization': 'Token {}'.format(token)}
+    r = requests.get(ENV + '/api/v1/containers', headers=headers)
+    result_json = json.loads(r.text)
+    return result_json
+
+
+def parse_containers_info(containers_result_json):
+    all_containers_metadata_list = []
+    for containers in containers_result_json['containers']:
+        container_id = containers['id']
+        container_name = containers['name']
+        container_status = containers['status']
+        container_public_ip = containers['public_ip']
+        container_image_id = containers['image_id']
+
+        this_container_metadata_list = [container_id, container_name, container_status, container_public_ip,
+                                        container_image_id]
+        all_containers_metadata_list.append(this_container_metadata_list)
+    return all_containers_metadata_list
 
 
 def parse_images_info(image_result_json):
@@ -75,6 +94,15 @@ def check_user_image(app_key, app_secret):
     tabulate_print_info(headers, all_image_list)
 
 
-if __name__ == '__main__':
-    check_user_image(ACCESS_KEY, ACCESS_SECRET)
+def check_user_container(app_key, app_secret):
+    token = get_token(app_key, app_secret)
+    container_result_json = get_containers(token)
+    all_container_list = parse_containers_info(container_result_json)
 
+    headers = ["id", "name", "status", "public_ip", "image_id"]
+    tabulate_print_info(headers, all_container_list)
+
+
+if __name__ == '__main__':
+    # check_user_image(ACCESS_KEY, ACCESS_SECRET)
+    check_user_container(ACCESS_KEY, ACCESS_SECRET)
