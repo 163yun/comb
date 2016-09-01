@@ -27,6 +27,7 @@ def get_container_flow(token, containerId):
     result_json = json.loads(r.text)
     return result_json
 
+
 def delete_container(token, containerId):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
@@ -44,15 +45,15 @@ def restart_container(token, containerId):
     return r.status_code
 
 
-
 def save_container_to_images(token, containerId):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
     r = requests.post(ENV + '/api/v1/containers/{containerId}/tag'.format(containerId=containerId),
-                     headers=headers)
+                      headers=headers)
 
     result_json = json.loads(r.text)
     return result_json
+
 
 def get_containers_list(token):
     headers = {'Content-type': 'application/json',
@@ -80,6 +81,7 @@ def do_container_show(app_key, app_secret, containerId):
     headers, tabulate_data_list = single_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
+
 def do_get_container_flow(app_key, app_secret, containerId):
     token = get_token(app_key, app_secret)
     container_result_json = get_container_flow(token, containerId)
@@ -88,6 +90,7 @@ def do_get_container_flow(app_key, app_secret, containerId):
     headers, tabulate_data_list = single_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
+
 def do_save_container_to_images(app_key, app_secret, containerId):
     token = get_token(app_key, app_secret)
     container_result_json = save_container_to_images(token, containerId)
@@ -95,6 +98,7 @@ def do_save_container_to_images(app_key, app_secret, containerId):
     json_key_list = ["repo_name", "tag"]
     headers, tabulate_data_list = single_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
+
 
 def do_delete_container(app_key, app_secret, containerId):
     token = get_token(app_key, app_secret)
