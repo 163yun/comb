@@ -15,6 +15,25 @@ ACCESS_KEY = '07ed767760f74d8a868071144d1048e8'
 ACCESS_SECRET = 'd965faa27f794e588c412ad90b6340fc'
 
 
+def json_tabulate(json, json_key_list, headers_list):
+    # second_key_list is headers
+    # first key list is the list prepared to parse
+    tabulate_data_list = []
+
+    for key in json_key_list:
+        for result in json[key]:
+            result_list = {}
+            this_result_list = []
+            for header in headers_list:
+                result_list[header] = result[header]
+                this_result_list.append(result_list[header])
+
+            tabulate_data_list.append(this_result_list)
+
+    headers = headers_list
+    return headers, tabulate_data_list
+
+
 def get_token(app_key, app_secret):
     headers = {'Content-type': 'application/json'}
     post_data = {
@@ -45,64 +64,30 @@ def get_containers(token):
     return result_json
 
 
-def parse_containers_info(containers_result_json):
-    all_containers_metadata_list = []
-    for containers in containers_result_json['containers']:
-        container_id = containers['id']
-        container_name = containers['name']
-        container_status = containers['status']
-        container_public_ip = containers['public_ip']
-        container_image_id = containers['image_id']
-
-        this_container_metadata_list = [container_id, container_name, container_status, container_public_ip,
-                                        container_image_id]
-        all_containers_metadata_list.append(this_container_metadata_list)
-    return all_containers_metadata_list
-
-
-def parse_images_info(image_result_json):
-    all_image_metadata_list = []
-    for custom_image in image_result_json['custom_images']:
-        custom_image_id = custom_image['id']
-        custom_image_name = custom_image['name']
-        custom_image_tag = custom_image['tag']
-
-        this_port_metadata_list = [custom_image_id, custom_image_name, custom_image_tag]
-        all_image_metadata_list.append(this_port_metadata_list)
-
-    for public_image in image_result_json['public_images']:
-        public_image_id = public_image['id']
-        public_image_name = public_image['name']
-        public_image_tag = public_image['tag']
-
-        this_port_metadata_list = [public_image_id, public_image_name, public_image_tag]
-        all_image_metadata_list.append(this_port_metadata_list)
-
-    return all_image_metadata_list
-
-
 def tabulate_print_info(headers, result_metadata_list):
     print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="text")
 
 
-def check_user_image(app_key, app_secret):
+def do_image_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
     image_result_json = get_images(token)
-    all_image_list = parse_images_info(image_result_json)
 
     headers = ["id", "name", "tag"]
-    tabulate_print_info(headers, all_image_list)
+    json_key_list = ["custom_images", "public_images"]
+    headers, tabulate_data_list = json_tabulate(image_result_json, json_key_list, headers)
+    tabulate_print_info(headers, tabulate_data_list)
 
 
-def check_user_container(app_key, app_secret):
+def do_container_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
     container_result_json = get_containers(token)
-    all_container_list = parse_containers_info(container_result_json)
 
     headers = ["id", "name", "status", "public_ip", "image_id"]
-    tabulate_print_info(headers, all_container_list)
+    json_key_list = ["containers"]
+    headers, tabulate_data_list = json_tabulate(container_result_json, json_key_list, headers)
+    tabulate_print_info(headers, tabulate_data_list)
 
 
 if __name__ == '__main__':
-    # check_user_image(ACCESS_KEY, ACCESS_SECRET)
-    check_user_container(ACCESS_KEY, ACCESS_SECRET)
+    do_image_list(ACCESS_KEY, ACCESS_SECRET)
+    do_container_list(ACCESS_KEY, ACCESS_SECRET)
