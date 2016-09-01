@@ -10,6 +10,14 @@ def get_app_images(token):
     result_json = json.loads(r.text)
     return result_json
 
+@click.group()
+def apps(**kwargs):
+    # print("This method has these arguments: " + str(kwargs))
+    pass
+
+@apps.command("app-image-list")
+@click.option('--app_key', default=ACCESS_KEY, help='app_key')
+@click.option('--app_secret', default=ACCESS_SECRET, help='app_secret')
 def do_app_image_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
     image_result_json = get_app_images(token)
@@ -26,7 +34,7 @@ def tabulate_print_info(headers, result_metadata_list):
 
 
 if __name__ == '__main__':
-    do_app_image_list(ACCESS_KEY, ACCESS_SECRET)
+    apps()
 
 
 
