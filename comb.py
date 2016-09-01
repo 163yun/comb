@@ -10,8 +10,6 @@ from containers import *
 from repositories import *
 from apps import *
 from secret_keys import *
-
-from json_tabulate import *
 import click
 
 # user token
