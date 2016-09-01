@@ -8,7 +8,7 @@ from tabulate import tabulate
 import click
 
 
-def json_tabulate(json, json_key_list, headers_list):
+def multi_column_json_tabulate(json, json_key_list, headers_list):
     # second_key_list is headers
     # first key list is the list prepared to parse
     tabulate_data_list = []
@@ -30,7 +30,7 @@ def json_tabulate(json, json_key_list, headers_list):
     return headers, tabulate_data_list
 
 
-def single_json_tabulate(json, json_key_list):
+def two_columns_json_tabulate(json, json_key_list):
     tabulate_data_list = []
 
     for key in json_key_list:

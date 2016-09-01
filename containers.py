@@ -69,7 +69,7 @@ def do_container_image_list(app_key, app_secret):
 
     headers = ["id", "name", "tag"]
     json_key_list = ["custom_images", "public_images"]
-    headers, tabulate_data_list = json_tabulate(image_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(image_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -78,7 +78,7 @@ def do_container_show(app_key, app_secret, containerId):
     container_result_json = get_container_info(token, containerId)
 
     json_key_list = ["id", "name", "status", "bandwidth", "public_ip", "image_id"]
-    headers, tabulate_data_list = single_json_tabulate(container_result_json, json_key_list)
+    headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -87,7 +87,7 @@ def do_get_container_flow(app_key, app_secret, containerId):
     container_result_json = get_container_flow(token, containerId)
 
     json_key_list = ["container_up_flow", "container_down_flow"]
-    headers, tabulate_data_list = single_json_tabulate(container_result_json, json_key_list)
+    headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -96,7 +96,7 @@ def do_save_container_to_images(app_key, app_secret, containerId):
     container_result_json = save_container_to_images(token, containerId)
 
     json_key_list = ["repo_name", "tag"]
-    headers, tabulate_data_list = single_json_tabulate(container_result_json, json_key_list)
+    headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -116,7 +116,7 @@ def do_container_list(app_key, app_secret):
 
     headers = ["id", "name", "status", "public_ip", "image_id"]
     json_key_list = ["containers"]
-    headers, tabulate_data_list = json_tabulate(container_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(container_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -127,5 +127,5 @@ def tabulate_print_info(headers, result_metadata_list):
 if __name__ == '__main__':
     do_container_list(ACCESS_KEY, ACCESS_SECRET)
     # do_repositories_list(ACCESS_KEY, ACCESS_SECRET)
-    # do_container_show(ACCESS_KEY, ACCESS_SECRET, "347339")
+    do_container_show(ACCESS_KEY, ACCESS_SECRET, "193887")
     do_get_container_flow(ACCESS_KEY, ACCESS_SECRET, "193887")

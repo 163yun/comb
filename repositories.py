@@ -26,7 +26,7 @@ def do_repositories_list(app_key, app_secret):
 
     headers = ["repo_id", "repo_name", "created_at"]
     json_key_list = ["repositories"]
-    headers, tabulate_data_list = json_tabulate(repositories_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(repositories_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -35,7 +35,7 @@ def do_show_repositories(app_key, app_secret, id):
     repositories_result_json = show_repositories(token, id)
 
     json_key_list = ["repo_id", "repo_name", "user_name", "open_level", "detail_desc", "created_at", "updated_at"]
-    headers, tabulate_data_list = single_json_tabulate(repositories_result_json, json_key_list)
+    headers, tabulate_data_list = two_columns_json_tabulate(repositories_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
 

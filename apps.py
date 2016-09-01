@@ -16,7 +16,7 @@ def do_app_image_list(app_key, app_secret):
 
     headers = ["id", "name", "tag"]
     json_key_list = ["custom_images", "public_images"]
-    headers, tabulate_data_list = json_tabulate(image_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(image_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 
