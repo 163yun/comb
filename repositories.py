@@ -20,6 +20,15 @@ def show_repositories(token, id):
     return result_json
 
 
+@click.group()
+def repositories(**kwargs):
+    # print("This method has these arguments: " + str(kwargs))
+    pass
+
+
+@repositories.command("repositories-list")
+@click.option('--app_key', default=ACCESS_KEY, help='app_key')
+@click.option('--app_secret', default=ACCESS_SECRET, help='app_secret')
 def do_repositories_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
     repositories_result_json = get_repositories_list(token)
@@ -29,7 +38,10 @@ def do_repositories_list(app_key, app_secret):
     headers, tabulate_data_list = multi_column_json_tabulate(repositories_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
-
+@repositories.command("repositories-show")
+@click.option('--app_key', default=ACCESS_KEY, help='app_key')
+@click.option('--app_secret', default=ACCESS_SECRET, help='app_secret')
+@click.argument('id')
 def do_show_repositories(app_key, app_secret, id):
     token = get_token(app_key, app_secret)
     repositories_result_json = show_repositories(token, id)
@@ -44,5 +56,4 @@ def tabulate_print_info(headers, result_metadata_list):
 
 
 if __name__ == '__main__':
-    do_repositories_list(ACCESS_KEY, ACCESS_SECRET)
-    do_show_repositories(ACCESS_KEY, ACCESS_SECRET, "5331")
+    repositories()
