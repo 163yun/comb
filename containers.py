@@ -55,6 +55,32 @@ def save_container_to_images(token, container_id):
     return result_json
 
 
+def create_container(token, charge_type, spec_id, image_type, image_id, name, desc, ssh_key_ids_list,
+                     use_public_network, network_charge_type, bandwidth):
+    headers = {'Content-type': 'application/json',
+               'Authorization': 'Token {}'.format(token)}
+    post_data = {
+        "charge_type": charge_type,
+        "spec_id": spec_id,
+        "image_type": image_type,
+        "image_id": image_id,
+        "name": name,
+        "desc": desc,
+        "ssh_key_ids": ssh_key_ids_list,
+        "use_public_network": use_public_network,
+        "network_charge_type": network_charge_type,
+        "bandwidth": bandwidth
+    }
+    post_data_json = json.dumps(post_data)
+    print post_data_json
+    r = requests.post(ENV + '/api/v1/containers',
+                      headers=headers, data=post_data_json)
+
+    result_json = json.loads(r.text)
+    print result_json
+    return result_json
+
+
 def get_containers_list(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
