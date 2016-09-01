@@ -1,8 +1,8 @@
-
 import requests
-from utils import  *
+from utils import *
 import json
 from json_tabulate import *
+
 
 def get_repositories(token):
     headers = {'Content-type': 'application/json',
@@ -10,6 +10,7 @@ def get_repositories(token):
     r = requests.get(ENV + '/api/v1/repositories', headers=headers)
     result_json = json.loads(r.text)
     return result_json
+
 
 def do_repositories_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
