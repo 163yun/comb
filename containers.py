@@ -105,11 +105,11 @@ def container(**kwargs):
 @click.option('--app_secret', default=ACCESS_SECRET, help='app_secret')
 def do_container_image_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
-    image_result_json = get_container_images(token)
+    container_image_result_json = get_container_images(token)
 
     headers = ["id", "name", "tag"]
     json_key_list = ["custom_images", "public_images"]
-    headers, tabulate_data_list = multi_column_json_tabulate(image_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(container_image_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -134,10 +134,10 @@ def do_container_show(app_key, app_secret, container_id):
 @click.argument('container_id')
 def do_get_container_flow(app_key, app_secret, container_id):
     token = get_token(app_key, app_secret)
-    container_result_json = get_container_flow(token, container_id)
+    container_flow_result_json = get_container_flow(token, container_id)
 
     json_key_list = ["container_up_flow", "container_down_flow"]
-    headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
+    headers, tabulate_data_list = two_columns_json_tabulate(container_flow_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -166,10 +166,10 @@ def do_container_create(app_key, app_secret, charge_type, spec_id, image_type, i
 @click.argument('container_id')
 def do_save_container_to_images(app_key, app_secret, container_id):
     token = get_token(app_key, app_secret)
-    container_result_json = save_container_to_images(token, container_id)
+    save_container_result_json = save_container_to_images(token, container_id)
 
     json_key_list = ["repo_name", "tag"]
-    headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
+    headers, tabulate_data_list = two_columns_json_tabulate(save_container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
 
@@ -196,11 +196,11 @@ def do_restart_container(app_key, app_secret, container_id):
 @click.option('--app_secret', default=ACCESS_SECRET, help='user tenantId')
 def do_container_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
-    container_result_json = get_containers_list(token)
+    container_list_result_json = get_containers_list(token)
 
     headers = ["id", "name", "status", "public_ip", "image_id"]
     json_key_list = ["containers"]
-    headers, tabulate_data_list = multi_column_json_tabulate(container_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(container_list_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 

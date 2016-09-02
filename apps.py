@@ -23,11 +23,11 @@ def apps(**kwargs):
 @click.option('--app_secret', default=ACCESS_SECRET, help='app_secret')
 def do_app_image_list(app_key, app_secret):
     token = get_token(app_key, app_secret)
-    image_result_json = get_app_images(token)
+    image_list_result_json = get_app_images(token)
 
     headers = ["id", "name", "tag", "weight", ]
     json_key_list = ["custom_images", "public_images"]
-    headers, tabulate_data_list = multi_column_json_tabulate(image_result_json, json_key_list, headers)
+    headers, tabulate_data_list = multi_column_json_tabulate(image_list_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)
 
 
