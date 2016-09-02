@@ -155,6 +155,11 @@ def do_get_container_flow(app_key, app_secret, container_id):
 @click.option('--bandwidth', default="")
 def do_container_create(app_key, app_secret, charge_type, spec_id, image_type, image_id, name, desc, use_public_network,
                         network_charge_type, bandwidth):
+    """
+    container create command \n
+    demo: \n 
+    container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testNew
+"""
     token = get_token(app_key, app_secret)
     create_container(token, charge_type, spec_id, image_type, image_id, name, desc, use_public_network,
                      network_charge_type, bandwidth)
