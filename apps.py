@@ -32,7 +32,7 @@ def do_app_image_list(app_key, app_secret):
 
 
 def tabulate_print_info(headers, result_metadata_list):
-    print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="text")
+    print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="left")
 
 
 if __name__ == '__main__':

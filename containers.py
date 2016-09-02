@@ -60,13 +60,13 @@ def create_container(token):
                'Authorization': 'Token {}'.format(token)}
     post_data = {
         "charge_type": 1,
-        "spec_id": 20,
+        "spec_id": 10,
         "image_type": 1,
-        "image_id": 1003,
+        "image_id": 10029,
         "name": "test_name",
         "desc": "desc",
         "ssh_key_ids": "",
-        "env_var": "",
+        "env_var": "{}",
         "use_public_network": 1,
         "network_charge_type": 1,
         "bandwidth": 100
@@ -181,7 +181,7 @@ def do_container_list(app_key, app_secret):
 
 
 def tabulate_print_info(headers, result_metadata_list):
-    print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="text")
+    print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="left")
 
 
 if __name__ == '__main__':

@@ -55,7 +55,7 @@ def do_show_repositories(app_key, app_secret, id):
 
 
 def tabulate_print_info(headers, result_metadata_list):
-    print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="text")
+    print tabulate(result_metadata_list, headers, tablefmt="psql", stralign="left", numalign="left")
 
 
 if __name__ == '__main__':
