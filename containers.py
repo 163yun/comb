@@ -55,19 +55,20 @@ def save_container_to_images(token, container_id):
     return result_json
 
 
-def create_container(token):
+def create_container(token, charge_type, spec_id, image_type, image_id, name, desc, use_public_network,
+                     network_charge_type, bandwidth):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
     post_data = {
-        "charge_type": "1",
-        "spec_id": 1,
-        "image_type": 1,
-        "image_id": "10005",
-        "name": "name222aa222",
-        "desc": "desc",
-        "use_public_network": 1,
-        "network_charge_type": 1,
-        "bandwidth": 100
+        "charge_type": charge_type,
+        "spec_id": spec_id,
+        "image_type": image_type,
+        "image_id": image_id,
+        "name": name,
+        "desc": desc,
+        "use_public_network": use_public_network,
+        "network_charge_type": network_charge_type,
+        "bandwidth": bandwidth
     }
     post_data_json = json.dumps(post_data)
     print post_data_json
@@ -132,6 +133,25 @@ def do_get_container_flow(app_key, app_secret, container_id):
     json_key_list = ["container_up_flow", "container_down_flow"]
     headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
+
+
+@container.command("container-create")
+@click.option('--app_key', default=ACCESS_KEY, help='app_key')
+@click.option('--app_secret', default=ACCESS_SECRET, help='app_key')
+@click.option('--charge_type')
+@click.option('--spec_id')
+@click.option('--image_type')
+@click.option('--image_id')
+@click.option('--name')
+@click.option('--desc', default="")
+@click.option('--use_public_network', default="")
+@click.option('--network_charge_type', default="")
+@click.option('--bandwidth', default="")
+def do_container_create(app_key, app_secret, charge_type, spec_id, image_type, image_id, name, desc, use_public_network,
+                        network_charge_type, bandwidth):
+    token = get_token(app_key, app_secret)
+    create_container(token, charge_type, spec_id, image_type, image_id, name, desc, use_public_network,
+                     network_charge_type, bandwidth)
 
 
 @container.command("container-to-image")
