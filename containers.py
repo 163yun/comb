@@ -55,21 +55,21 @@ def save_container_to_images(token, container_id):
     return result_json
 
 
-def create_container(token, charge_type, spec_id, image_type, image_id, name, desc, ssh_key_ids_list,
-                     use_public_network, network_charge_type, bandwidth):
+def create_container(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
     post_data = {
-        "charge_type": charge_type,
-        "spec_id": spec_id,
-        "image_type": image_type,
-        "image_id": image_id,
-        "name": name,
-        "desc": desc,
-        "ssh_key_ids": ssh_key_ids_list,
-        "use_public_network": use_public_network,
-        "network_charge_type": network_charge_type,
-        "bandwidth": bandwidth
+        "charge_type": 1,
+        "spec_id": 20,
+        "image_type": 1,
+        "image_id": 1003,
+        "name": "test_name",
+        "desc": "desc",
+        "ssh_key_ids": "",
+        "env_var":"",
+        "use_public_network": 1,
+        "network_charge_type": 1,
+        "bandwidth": 100
     }
     post_data_json = json.dumps(post_data)
     print post_data_json
@@ -116,7 +116,9 @@ def do_container_show(app_key, app_secret, container_id):
     token = get_token(app_key, app_secret)
     container_result_json = get_container_info(token, container_id)
 
-    json_key_list = ["id", "name", "status", "bandwidth", "public_ip", "image_id"]
+    json_key_list = ["id", "bandwidth", "charge_type", "created_at", "desc", "env_var", "image_id", "name",
+                     "network_charge_type", "private_ip", "public_ip", "replicas", "spec_id", "ssh_key_ids", "status",
+                     "updated_at", "use_public_network", ]
     headers, tabulate_data_list = two_columns_json_tabulate(container_result_json, json_key_list)
     tabulate_print_info(headers, tabulate_data_list)
 
@@ -183,4 +185,5 @@ def tabulate_print_info(headers, result_metadata_list):
 
 
 if __name__ == '__main__':
-    container()
+    token= get_token(ACCESS_KEY,ACCESS_SECRET)
+    create_container(token)
