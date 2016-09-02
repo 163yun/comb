@@ -3,7 +3,7 @@ import json
 import click
 from utils import *
 from json_tabulate import *
-from tabulate import  tabulate
+from tabulate import tabulate
 
 
 def get_repositories_list(token):
@@ -36,7 +36,7 @@ def do_repositories_list(app_key, app_secret):
     repositories_result_json = get_repositories_list(token)
 
     headers = ["repo_id", "user_name", "repo_name", "open_level", "tag_count",
-                 "updated_at",  ]
+               "updated_at", ]
     json_key_list = ["repositories"]
     headers, tabulate_data_list = multi_column_json_tabulate(repositories_result_json, json_key_list, headers)
     tabulate_print_info(headers, tabulate_data_list)

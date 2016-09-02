@@ -3,7 +3,7 @@ import json
 import click
 from utils import *
 from json_tabulate import *
-from tabulate import  tabulate
+from tabulate import tabulate
 
 
 def get_container_images(token):
@@ -17,7 +17,8 @@ def get_container_images(token):
 def get_container_info(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(COMB_OPENAPI + '/api/v1/containers/{container_id}'.format(container_id=container_id), headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/containers/{container_id}'.format(container_id=container_id),
+                     headers=headers)
     result_json = json.loads(r.text)
     return result_json
 
@@ -25,7 +26,8 @@ def get_container_info(token, container_id):
 def get_container_flow(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(COMB_OPENAPI + '/api/v1/containers/{container_id}/flow'.format(container_id=container_id), headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/containers/{container_id}/flow'.format(container_id=container_id),
+                     headers=headers)
     result_json = json.loads(r.text)
     return result_json
 
@@ -33,7 +35,8 @@ def get_container_flow(token, container_id):
 def delete_container(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.delete(COMB_OPENAPI + '/api/v1/containers/{container_id}'.format(container_id=container_id), headers=headers)
+    r = requests.delete(COMB_OPENAPI + '/api/v1/containers/{container_id}'.format(container_id=container_id),
+                        headers=headers)
 
     return r.status_code
 
@@ -41,8 +44,9 @@ def delete_container(token, container_id):
 def restart_container(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.put(COMB_OPENAPI + '/api/v1/containers/{container_id}/actions/restart'.format(container_id=container_id),
-                     headers=headers)
+    r = requests.put(
+        COMB_OPENAPI + '/api/v1/containers/{container_id}/actions/restart'.format(container_id=container_id),
+        headers=headers)
 
     return r.status_code
 
