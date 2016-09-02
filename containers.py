@@ -66,7 +66,7 @@ def create_container(token):
         "name": "test_name",
         "desc": "desc",
         "ssh_key_ids": "",
-        "env_var":"",
+        "env_var": "",
         "use_public_network": 1,
         "network_charge_type": 1,
         "bandwidth": 100
@@ -185,5 +185,5 @@ def tabulate_print_info(headers, result_metadata_list):
 
 
 if __name__ == '__main__':
-    token= get_token(ACCESS_KEY,ACCESS_SECRET)
+    token = get_token(ACCESS_KEY, ACCESS_SECRET)
     create_container(token)

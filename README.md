@@ -59,17 +59,29 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 ## 查询容器信息
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-show 630831
-+-----------+--------------+
-| Field     | Value        |
-|-----------+--------------|
-| id        | 630831       |
-| name      | testNagios   |
-| status    | create_succ  |
-| bandwidth | 100          |
-| public_ip | 59.111.91.56 |
-| image_id  | 26413        |
-+-----------+--------------+
+root@debian-test-master:~/comb_client# ./comb.py  container-show 628306
++---------------------+----------------------+
+| Field               | Value                |
+|---------------------+----------------------|
+| id                  | 628306               |
+| bandwidth           | 100                  |
+| charge_type         | 1                    |
+| created_at          | 2016-09-01T09:27:07Z |
+| desc                |                      |
+| env_var             | {}                   |
+| image_id            | 21697                |
+| name                | test                 |
+| network_charge_type | 2                    |
+| private_ip          | 10.173.32.61         |
+| public_ip           | 59.111.91.23         |
+| replicas            | 1                    |
+| spec_id             | 1                    |
+| ssh_key_ids         |                      |
+| status              | create_succ          |
+| updated_at          | 2016-09-01T09:27:40Z |
+| use_public_network  | 1                    |
++---------------------+----------------------+
+
 ```
 
 ## 查询已用的流量
