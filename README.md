@@ -1,7 +1,7 @@
 # Netease-comb CLI 
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py --help
+root@debian-test-master:~/comb_client# ./comb.py   
 Usage: comb.py [OPTIONS] COMMAND [ARGS]...
 
 Options:
@@ -9,6 +9,7 @@ Options:
 
 Commands:
   app-image-list
+  container-create
   container-delete
   container-flow
   container-image-list
@@ -26,68 +27,90 @@ root@debian-test-master:~/comb_client#
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py app-image-list
-+-------+------------+--------+
-|    id | name       | tag    |
-|-------+------------+--------|
-| 22568 | minimal    | latest |
-| 35630 | myss2-0528 | latest |
-| 30656 | myss       | latest |
-| 26413 | nagios     | v1     |
-| 22567 | aas        | latest |
-| 1     | tomcat     | 7.0.62 |
-| 5     | php        | 5.5    |
-| 6     | nodejs     | 0.12.2 |
-| 7     | python     | 2.7    |
-| 9     | ruby       | 1.9    |
-| 26369 | tomcat_apm | latest |
-+-------+------------+--------+
++-------+------------+--------+----------+
+| id    | name       | tag    | weight   |
+|-------+------------+--------+----------|
+| 22568 | minimal    | latest | 0        |
+| 35630 | myss2-0528 | latest | 1000     |
+| 30656 | myss       | latest | 0        |
+| 26413 | nagios     | v1     | 0        |
+| 22567 | aas        | latest | 0        |
+| 1     | tomcat     | 7.0.62 | 1000     |
+| 5     | php        | 5.5    | 1000     |
+| 6     | nodejs     | 0.12.2 | 1000     |
+| 7     | python     | 2.7    | 1000     |
+| 9     | ruby       | 1.9    | 1000     |
+| 26369 | tomcat_apm | latest | 0        |
++-------+------------+--------+----------+
+root@debian-test-master:~/comb_client# 
 ```
+
+## 创建容器
+
+
+```
+root@debian-test-master:~/comb_client# ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testNew
+
+{"charge_type": "1", "image_id": "10005", "bandwidth": "", "name": "testNew", "use_public_network": "", "image_type": "1", "network_charge_type": "", "spec_id": "1", "desc": ""}
+{u'id': 631746}  
+
+root@debian-test-master:~/comb_client# ./comb.py   container-list
++--------+---------+-------------+---------------+------------+
+| id     | name    | status      | public_ip     | image_id   |
+|--------+---------+-------------+---------------+------------|
+| 631746 | testNew | create_succ | 59.111.91.67  | 10005      |
+| 628306 | test    | create_succ | 59.111.91.23  | 21697      |
+| 193887 | myss2   | create_succ | 59.111.72.128 | 30656      |
++--------+---------+-------------+---------------+------------+
+
+```
+
 
 ## 列出所有容器
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py  container-list
-+--------+------------+-------------+---------------+------------+
-|     id | name       | status      | public_ip     |   image_id |
-|--------+------------+-------------+---------------+------------|
-| 630831 | testNagios | create_succ | 59.111.91.56  | 26413      |
-| 628306 | test       | create_succ | 59.111.91.23  | 21697      |
-| 193887 | myss2      | create_succ | 59.111.72.128 | 30656      |
-+--------+------------+-------------+---------------+------------+
++--------+---------+-------------+---------------+------------+
+| id     | name    | status      | public_ip     | image_id   |
+|--------+---------+-------------+---------------+------------|
+| 631746 | testNew | create_succ | 59.111.91.67  | 10005      |
+| 628306 | test    | create_succ | 59.111.91.23  | 21697      |
+| 193887 | myss2   | create_succ | 59.111.72.128 | 30656      |
++--------+---------+-------------+---------------+------------+
+
 ```
 
 ## 查询容器信息
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-show 628306
+root@debian-test-master:~/comb_client# ./comb.py  container-show 631746
 +---------------------+----------------------+
 | Field               | Value                |
 |---------------------+----------------------|
-| id                  | 628306               |
+| id                  | 631746               |
 | bandwidth           | 100                  |
 | charge_type         | 1                    |
-| created_at          | 2016-09-01T09:27:07Z |
+| created_at          | 2016-09-02T06:41:48Z |
 | desc                |                      |
-| env_var             | {}                   |
-| image_id            | 21697                |
-| name                | test                 |
+| env_var             |                      |
+| image_id            | 10005                |
+| name                | testNew              |
 | network_charge_type | 2                    |
-| private_ip          | 10.173.32.61         |
-| public_ip           | 59.111.91.23         |
+| private_ip          | 10.173.32.82         |
+| public_ip           | 59.111.91.67         |
 | replicas            | 1                    |
 | spec_id             | 1                    |
 | ssh_key_ids         |                      |
 | status              | create_succ          |
-| updated_at          | 2016-09-01T09:27:40Z |
+| updated_at          | 2016-09-02T06:42:22Z |
 | use_public_network  | 1                    |
 +---------------------+----------------------+
-
 ```
 
 ## 查询已用的流量
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-flow 630831
+root@debian-test-master:~/comb_client# ./comb.py  container-flow  631746
 +---------------------+---------+
 | Field               | Value   |
 |---------------------+---------|
@@ -108,25 +131,25 @@ root@debian-test-master:~/comb_client# ./comb.py  container-flow 193887
 ## 重启容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-restart  630831
+root@debian-test-master:~/comb_client# ./comb.py  container-restart 631746
 root@debian-test-master:~/comb_client# ./comb.py  container-list
-+--------+------------+--------------+---------------+------------+
-|     id | name       | status       | public_ip     |   image_id |
-|--------+------------+--------------+---------------+------------|
-| 630831 | testNagios | restart_succ | 59.111.91.56  | 26413      |
-| 628306 | test       | create_succ  | 59.111.91.23  | 21697      |
-| 193887 | myss2      | create_succ  | 59.111.72.128 | 30656      |
-+--------+------------+--------------+---------------+------------+
++--------+---------+--------------+---------------+------------+
+| id     | name    | status       | public_ip     | image_id   |
+|--------+---------+--------------+---------------+------------|
+| 631746 | testNew | restart_succ | 59.111.91.67  | 10005      |
+| 628306 | test    | create_succ  | 59.111.91.23  | 21697      |
+| 193887 | myss2   | create_succ  | 59.111.72.128 | 30656      |
++--------+---------+--------------+---------------+------------+
 ```
 
 
 ## 删除容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-delete 630831 
+root@debian-test-master:~/comb_client# ./comb.py  container-delete 631746
 root@debian-test-master:~/comb_client# ./comb.py  container-list
 +--------+--------+-------------+---------------+------------+
-|     id | name   | status      | public_ip     |   image_id |
+| id     | name   | status      | public_ip     | image_id   |
 |--------+--------+-------------+---------------+------------|
 | 628306 | test   | create_succ | 59.111.91.23  | 21697      |
 | 193887 | myss2  | create_succ | 59.111.72.128 | 30656      |
@@ -178,16 +201,16 @@ root@debian-test-master:~/comb_client# ./comb.py   container-image-list
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py repositories-list
-+-----------+-------------+----------------------+
-|   repo_id | repo_name   | created_at           |
-|-----------+-------------+----------------------|
-| 2095      | minimal     | 2016-03-18T09:02:07Z |
-| 18312     | myss2-0528  | 2016-05-28T14:41:13Z |
-| 10671     | myss        | 2016-05-06T13:21:38Z |
-| 5331      | nagios      | 2016-04-15T03:09:27Z |
-| 2093      | aas         | 2016-03-18T08:56:51Z |
-+-----------+-------------+----------------------+
-```
+
++-----------+-------------+-------------+--------------+-------------+----------------------+
+| repo_id   | user_name   | repo_name   | open_level   | tag_count   | updated_at           |
+|-----------+-------------+-------------+--------------+-------------+----------------------|
+| 2095      | fcyiqiao    | minimal     | 1            | 1           | 2016-06-03T09:59:04Z |
+| 18312     | fcyiqiao    | myss2-0528  | 0            | 1           | 2016-05-28T14:43:05Z |
+| 10671     | fcyiqiao    | myss        | 0            | 1           | 2016-05-06T13:23:21Z |
+| 5331      | fcyiqiao    | nagios      | 1            | 1           | 2016-04-15T04:47:44Z |
+| 2093      | fcyiqiao    | aas         | 0            | 1           | 2016-03-18T08:57:53Z |
++-----------+-------------+-------------+--------------+-------------+----------------------+```
 
 ## 查询镜像详情
 
@@ -197,10 +220,12 @@ root@debian-test-master:~/comb_client# ./comb.py repositories-show 5331
 | Field       | Value                |
 |-------------+----------------------|
 | repo_id     | 5331                 |
-| repo_name   | nagios               |
 | user_name   | fcyiqiao             |
+| repo_name   | nagios               |
 | open_level  | 1                    |
+| base_desc   |                      |
 | detail_desc |                      |
+| tag_count   | 1                    |
 | created_at  | 2016-04-15T03:09:27Z |
 | updated_at  | 2016-04-15T04:47:44Z |
 +-------------+----------------------+
