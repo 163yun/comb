@@ -41,7 +41,6 @@ root@debian-test-master:~/comb_client# ./comb.py app-image-list
 | 9     | ruby       | 1.9    |
 | 26369 | tomcat_apm | latest |
 +-------+------------+--------+
-root@debian-test-master:~/comb_client# 
 ```
 
 ## 列出所有容器
@@ -55,7 +54,6 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 | 628306 | test       | create_succ | 59.111.91.23  | 21697      |
 | 193887 | myss2      | create_succ | 59.111.72.128 | 30656      |
 +--------+------------+-------------+---------------+------------+
-root@debian-test-master:~/comb_client# 
 ```
 
 ## 查询容器信息
@@ -72,7 +70,6 @@ root@debian-test-master:~/comb_client# ./comb.py  container-show 630831
 | public_ip | 59.111.91.56 |
 | image_id  | 26413        |
 +-----------+--------------+
-root@debian-test-master:~/comb_client# 
 ```
 
 ## 查询已用的流量
@@ -85,6 +82,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-flow 630831
 | container_up_flow   | 0.00B   |
 | container_down_flow | 0.00B   |
 +---------------------+---------+
+
 root@debian-test-master:~/comb_client# ./comb.py  container-flow 193887
 +---------------------+---------+
 | Field               | Value   |
@@ -92,7 +90,6 @@ root@debian-test-master:~/comb_client# ./comb.py  container-flow 193887
 | container_up_flow   | 18.61GB |
 | container_down_flow | 30.66GB |
 +---------------------+---------+
-root@debian-test-master:~/comb_client# 
 ```
 
 
@@ -108,7 +105,6 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 | 628306 | test       | create_succ  | 59.111.91.23  | 21697      |
 | 193887 | myss2      | create_succ  | 59.111.72.128 | 30656      |
 +--------+------------+--------------+---------------+------------+
-root@debian-test-master:~/comb_client# 
 ```
 
 
@@ -123,7 +119,6 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 | 628306 | test   | create_succ | 59.111.91.23  | 21697      |
 | 193887 | myss2  | create_succ | 59.111.72.128 | 30656      |
 +--------+--------+-------------+---------------+------------+
-root@debian-test-master:~/comb_client# 
 ```
 
 
@@ -164,7 +159,6 @@ root@debian-test-master:~/comb_client# ./comb.py   container-image-list
 | 20770 | ubuntu     | 16.04        |
 | 38664 | wordpress  | 4.5.2        |
 +-------+------------+--------------+
-root@debian-test-master:~/comb_client# 
 ```
 
 
