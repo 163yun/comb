@@ -59,17 +59,11 @@ def create_container(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
     post_data = {
-        "charge_type": 1,
-        "spec_id": 10,
-        "image_type": 1,
-        "image_id": 10029,
-        "name": "test_name",
-        "desc": "desc",
-        "ssh_key_ids": "",
-        "env_var": "{}",
-        "use_public_network": 1,
-        "network_charge_type": 1,
-        "bandwidth": 100
+          "charge_type": 1,
+          "spec_id": 1,
+          "image_type": 1,
+          "image_id": 10005,
+          "name":"name2222"
     }
     post_data_json = json.dumps(post_data)
     print post_data_json
