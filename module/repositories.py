@@ -1,9 +1,9 @@
-import requests
-import json
 import click
-from utils import *
-from json_tabulate import *
 from tabulate import tabulate
+
+from lib.token import *
+
+from lib.json_tabulate import *
 
 
 def get_repositories_list(token):

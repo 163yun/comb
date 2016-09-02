@@ -1,7 +1,8 @@
-from utils import *
-from json_tabulate import *
 import click
 from tabulate import tabulate
+
+from lib.token import *
+from lib.json_tabulate import *
 
 
 def get_app_images(token):
