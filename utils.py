@@ -1,14 +1,16 @@
 __author__ = 'hzhuangzhexiao'
 
 import json
+import ConfigParser
 import requests
-import tabulate
 
-HEADERS = {'Content-type': 'application/json'}
-ENV = 'https://open.c.163.com'
 
-ACCESS_KEY = '07ed767760f74d8a868071144d1048e8'
-ACCESS_SECRET = 'd965faa27f794e588c412ad90b6340fc'
+conf = ConfigParser.ConfigParser()
+conf.read("auth.conf")
+
+COMB_OPENAPI = conf.get("section", "COMB_OPENAPI")
+ACCESS_KEY = conf.get("section", "ACCESS_KEY")
+ACCESS_SECRET = conf.get("section", "ACCESS_KEY")
 
 
 def get_token(app_key, app_secret):
@@ -19,7 +21,7 @@ def get_token(app_key, app_secret):
     }
     post_data_json = json.dumps(post_data)
 
-    r = requests.post(ENV + '/api/v1/token', data=post_data_json, headers=headers)
+    r = requests.post(COMB_OPENAPI + '/api/v1/token', data=post_data_json, headers=headers)
     result_json = json.loads(r.text)
     token = result_json['token']
     return token

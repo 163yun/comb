@@ -1,13 +1,15 @@
 import requests
 import json
+import click
 from utils import *
 from json_tabulate import *
+from tabulate import  tabulate
 
 
 def get_container_images(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/containers/images', headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/containers/images', headers=headers)
     result_json = json.loads(r.text)
     return result_json
 
@@ -15,7 +17,7 @@ def get_container_images(token):
 def get_container_info(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/containers/{container_id}'.format(container_id=container_id), headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/containers/{container_id}'.format(container_id=container_id), headers=headers)
     result_json = json.loads(r.text)
     return result_json
 
@@ -23,7 +25,7 @@ def get_container_info(token, container_id):
 def get_container_flow(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/containers/{container_id}/flow'.format(container_id=container_id), headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/containers/{container_id}/flow'.format(container_id=container_id), headers=headers)
     result_json = json.loads(r.text)
     return result_json
 
@@ -31,7 +33,7 @@ def get_container_flow(token, container_id):
 def delete_container(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.delete(ENV + '/api/v1/containers/{container_id}'.format(container_id=container_id), headers=headers)
+    r = requests.delete(COMB_OPENAPI + '/api/v1/containers/{container_id}'.format(container_id=container_id), headers=headers)
 
     return r.status_code
 
@@ -39,7 +41,7 @@ def delete_container(token, container_id):
 def restart_container(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.put(ENV + '/api/v1/containers/{container_id}/actions/restart'.format(container_id=container_id),
+    r = requests.put(COMB_OPENAPI + '/api/v1/containers/{container_id}/actions/restart'.format(container_id=container_id),
                      headers=headers)
 
     return r.status_code
@@ -48,7 +50,7 @@ def restart_container(token, container_id):
 def save_container_to_images(token, container_id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.post(ENV + '/api/v1/containers/{container_id}/tag'.format(container_id=container_id),
+    r = requests.post(COMB_OPENAPI + '/api/v1/containers/{container_id}/tag'.format(container_id=container_id),
                       headers=headers)
 
     result_json = json.loads(r.text)
@@ -72,7 +74,7 @@ def create_container(token, charge_type, spec_id, image_type, image_id, name, de
     }
     post_data_json = json.dumps(post_data)
     print post_data_json
-    r = requests.post(ENV + '/api/v1/containers',
+    r = requests.post(COMB_OPENAPI + '/api/v1/containers',
                       headers=headers, data=post_data_json)
 
     result_json = json.loads(r.text)
@@ -83,7 +85,7 @@ def create_container(token, charge_type, spec_id, image_type, image_id, name, de
 def get_containers_list(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/containers', headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/containers', headers=headers)
     result_json = json.loads(r.text)
     return result_json
 

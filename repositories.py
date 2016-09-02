@@ -1,13 +1,15 @@
 import requests
 import json
+import click
 from utils import *
 from json_tabulate import *
+from tabulate import  tabulate
 
 
 def get_repositories_list(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/repositories', headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/repositories', headers=headers)
     result_json = json.loads(r.text)
     return result_json
 
@@ -15,7 +17,7 @@ def get_repositories_list(token):
 def show_repositories(token, id):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/repositories/{}'.format(id), headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/repositories/{}'.format(id), headers=headers)
     result_json = json.loads(r.text)
     return result_json
 

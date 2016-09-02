@@ -1,13 +1,13 @@
-import requests
-import json
 from utils import *
 from json_tabulate import *
+import click
+from tabulate import  tabulate
 
 
 def get_app_images(token):
     headers = {'Content-type': 'application/json',
                'Authorization': 'Token {}'.format(token)}
-    r = requests.get(ENV + '/api/v1/apps/images', headers=headers)
+    r = requests.get(COMB_OPENAPI + '/api/v1/apps/images', headers=headers)
     result_json = json.loads(r.text)
     return result_json
 

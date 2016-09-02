@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import json
-
-import requests
-from tabulate import tabulate
-import click
-
 
 def multi_column_json_tabulate(json, json_key_list, headers_list):
     # handle column like this
@@ -72,7 +66,6 @@ def two_columns_json_tabulate(json, json_key_list):
             tabulate_data_list.append([key, result_list[key]])
         except:
             pass
-
 
     headers = ["Field", "Value"]
     return headers, tabulate_data_list
