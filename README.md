@@ -1,3 +1,4 @@
+
 # Netease-comb CLI 
 
 ```
@@ -22,8 +23,46 @@ Commands:
 root@debian-test-master:~/comb_client# 
 ```
 
+## 安装
 
-## 列出所有镜像
+```
+git clone git://github.com/mooz/percol.git
+cd comb
+```
+
+### 依赖
+
+```
+click
+tabulate
+```
+
+可以这样安装依赖
+
+```
+pip install click
+pip install tabulate
+```
+
+
+
+## 使用
+
+### 认证
+
+蜂巢 API 需要使用 API Token 来发起 API 请求。 请到 https://c.163.com 页面登陆到你的账户，查看你的 Access Key 和 Access Secret。
+
+然后编辑你的 `auth.conf` 文件，将`ACCESS_KEY`  和 `ACCESS_SECRET` 替换为你的即可。
+
+```
+[DEFAULT]
+COMB_OPENAPI = https://open.c.163.com
+ACCESS_KEY = 07ed767760f74d8a868071144d1048e8
+ACCESS_SECRET = d965faa27f794e588c412ad90b6340fc
+```
+
+
+### 列出所有镜像
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py app-image-list
@@ -42,10 +81,10 @@ root@debian-test-master:~/comb_client# ./comb.py app-image-list
 | 9     | ruby       | 1.9    | 1000     |
 | 26369 | tomcat_apm | latest | 0        |
 +-------+------------+--------+----------+
-root@debian-test-master:~/comb_client# 
+
 ```
 
-## 创建容器
+### 创建容器
 
 
 ```
@@ -66,7 +105,7 @@ root@debian-test-master:~/comb_client# ./comb.py   container-list
 ```
 
 
-## 列出所有容器
+### 列出所有容器
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py  container-list
@@ -80,7 +119,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 
 ```
 
-## 查询容器信息
+### 查询容器信息
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py  container-show 631746
@@ -107,7 +146,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-show 631746
 +---------------------+----------------------+
 ```
 
-## 查询已用的流量
+### 查询已用的流量
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py  container-flow  631746
@@ -128,7 +167,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-flow 193887
 ```
 
 
-## 重启容器
+### 重启容器
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py  container-restart 631746
@@ -143,7 +182,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 ```
 
 
-## 删除容器
+### 删除容器
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py  container-delete 631746
@@ -157,7 +196,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 ```
 
 
-## 容器镜像列表
+### 容器镜像列表
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py   container-image-list
@@ -197,7 +236,7 @@ root@debian-test-master:~/comb_client# ./comb.py   container-image-list
 ```
 
 
-## 镜像列表
+### 镜像列表
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py repositories-list
@@ -213,7 +252,7 @@ root@debian-test-master:~/comb_client# ./comb.py repositories-list
 +-----------+-------------+-------------+--------------+-------------+----------------------+
 ```
 
-## 查询镜像详情
+### 查询镜像详情
 
 ```
 root@debian-test-master:~/comb_client# ./comb.py repositories-show 5331
@@ -231,4 +270,68 @@ root@debian-test-master:~/comb_client# ./comb.py repositories-show 5331
 | updated_at  | 2016-04-15T04:47:44Z |
 +-------------+----------------------+
 ```
+
+## tips
+
+当使用 comb 管理大量容器时，可以通过shell循环实现容器资源的批量操作
+
+
+
+### 批量创建
+
+```
+root@debian-test-master:~/comb_client# for i in $(seq 1 5); do ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testCentos$i ; done
+
+
+root@debian-test-master:~/comb_client# ./comb.py container-list
++--------+-------------+-------------+---------------+------------+
+| id     | name        | status      | public_ip     | image_id   |
+|--------+-------------+-------------+---------------+------------|
+| 635717 | testCentos5 | create_succ | 59.111.91.75  | 10005      |
+| 635716 | testCentos4 | create_succ | 59.111.91.74  | 10005      |
+| 635715 | testCentos3 | create_succ | 59.111.91.73  | 10005      |
+| 635714 | testCentos2 | create_succ | 59.111.91.72  | 10005      |
+| 635713 | testCentos1 | create_succ | 59.111.91.71  | 10005      |
+| 634664 | testNew2    | create_succ | 59.111.91.69  | 10005      |
+| 634663 | testNew1    | create_succ | 59.111.91.68  | 10005      |
+| 628306 | test        | create_succ | 59.111.91.23  | 21697      |
+| 193887 | myss2       | create_succ | 59.111.72.128 | 30656      |
++--------+-------------+-------------+---------------+------------+
+```
+
+
+### 批量删除名字中含有testNew的容器
+
+```
+root@debian-test-master:~/comb_client# ./comb.py container-list |grep testNew |awk '{print $2}' | xargs -n 1 ./comb.py container-delete 
+
+root@debian-test-master:~/comb_client# ./comb.py container-list
++--------+-------------+-------------+---------------+------------+
+| id     | name        | status      | public_ip     | image_id   |
+|--------+-------------+-------------+---------------+------------|
+| 635717 | testCentos5 | create_succ | 59.111.91.75  | 10005      |
+| 635716 | testCentos4 | create_succ | 59.111.91.74  | 10005      |
+| 635715 | testCentos3 | create_succ | 59.111.91.73  | 10005      |
+| 635714 | testCentos2 | create_succ | 59.111.91.72  | 10005      |
+| 635713 | testCentos1 | create_succ | 59.111.91.71  | 10005      |
+| 628306 | test        | create_succ | 59.111.91.23  | 21697      |
+| 193887 | myss2       | create_succ | 59.111.72.128 | 30656      |
++--------+-------------+-------------+---------------+------------+
+```
+
+
+### 批量删除所有使用centos 6.7 镜像创建的容器
+
+```
+root@debian-test-master:~/comb_client# ./comb.py container-list |grep 10005  |awk '{print $2}' | xargs -n 1 ./comb.py container-delete 
+root@debian-test-master:~/comb_client# ./comb.py container-list
++--------+--------+-------------+---------------+------------+
+| id     | name   | status      | public_ip     | image_id   |
+|--------+--------+-------------+---------------+------------|
+| 628306 | test   | create_succ | 59.111.91.23  | 21697      |
+| 193887 | myss2  | create_succ | 59.111.72.128 | 30656      |
++--------+--------+-------------+---------------+------------+
+
+```
+
 
