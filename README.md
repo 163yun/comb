@@ -2,7 +2,7 @@
 # Netease-comb CLI 
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py   
+hzhuangzhexiao@debian:~/comb_client# ./comb.py   
 Usage: comb.py [OPTIONS] COMMAND [ARGS]...
 
 Options:
@@ -20,13 +20,12 @@ Commands:
   container-to-image
   repositories-list
   repositories-show
-root@debian-test-master:~/comb_client# 
 ```
 
 ## 安装
 
 ```
-git clone git://github.com/mooz/percol.git
+git clone git://github.com/smasterfree/comb.git
 cd comb
 ```
 
@@ -37,7 +36,7 @@ click
 tabulate
 ```
 
-可以这样安装依赖
+安装依赖
 
 ```
 pip install click
@@ -65,7 +64,7 @@ ACCESS_SECRET = d965faa27f794e588c412ad90b6340fc
 ### 列出所有镜像
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py app-image-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py app-image-list
 +-------+------------+--------+----------+
 | id    | name       | tag    | weight   |
 |-------+------------+--------+----------|
@@ -88,12 +87,12 @@ root@debian-test-master:~/comb_client# ./comb.py app-image-list
 
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testNew
+hzhuangzhexiao@debian:~/comb_client# ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testNew
 
 {"charge_type": "1", "image_id": "10005", "bandwidth": "", "name": "testNew", "use_public_network": "", "image_type": "1", "network_charge_type": "", "spec_id": "1", "desc": ""}
 {u'id': 631746}  
 
-root@debian-test-master:~/comb_client# ./comb.py   container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py   container-list
 +--------+---------+-------------+---------------+------------+
 | id     | name    | status      | public_ip     | image_id   |
 |--------+---------+-------------+---------------+------------|
@@ -108,7 +107,7 @@ root@debian-test-master:~/comb_client# ./comb.py   container-list
 ### 列出所有容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-list
 +--------+---------+-------------+---------------+------------+
 | id     | name    | status      | public_ip     | image_id   |
 |--------+---------+-------------+---------------+------------|
@@ -122,7 +121,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 ### 查询容器信息
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-show 631746
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-show 631746
 +---------------------+----------------------+
 | Field               | Value                |
 |---------------------+----------------------|
@@ -149,7 +148,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-show 631746
 ### 查询已用的流量
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-flow  631746
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-flow  631746
 +---------------------+---------+
 | Field               | Value   |
 |---------------------+---------|
@@ -157,7 +156,7 @@ root@debian-test-master:~/comb_client# ./comb.py  container-flow  631746
 | container_down_flow | 0.00B   |
 +---------------------+---------+
 
-root@debian-test-master:~/comb_client# ./comb.py  container-flow 193887
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-flow 193887
 +---------------------+---------+
 | Field               | Value   |
 |---------------------+---------|
@@ -170,8 +169,8 @@ root@debian-test-master:~/comb_client# ./comb.py  container-flow 193887
 ### 重启容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-restart 631746
-root@debian-test-master:~/comb_client# ./comb.py  container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-restart 631746
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-list
 +--------+---------+--------------+---------------+------------+
 | id     | name    | status       | public_ip     | image_id   |
 |--------+---------+--------------+---------------+------------|
@@ -185,8 +184,8 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 ### 删除容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py  container-delete 631746
-root@debian-test-master:~/comb_client# ./comb.py  container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-delete 631746
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-list
 +--------+--------+-------------+---------------+------------+
 | id     | name   | status      | public_ip     | image_id   |
 |--------+--------+-------------+---------------+------------|
@@ -199,27 +198,18 @@ root@debian-test-master:~/comb_client# ./comb.py  container-list
 ### 容器镜像列表
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py   container-image-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py   container-image-list
 +-------+------------+--------------+
 |    id | name       | tag          |
 |-------+------------+--------------|
 | 22568 | minimal    | latest       |
-| 35630 | myss2-0528 | latest       |
 | 30656 | myss       | latest       |
 | 26413 | nagios     | v1           |
-| 22567 | aas        | latest       |
 | 21640 | mongodb    | 3.2.0        |
-| 21699 | postgres   | 9.5.1        |
-| 21697 | centos     | 6.5          |
 | 10005 | centos     | 6.7          |
-| 27066 | centos     | 7-common     |
-| 20762 | centos     | 7.0          |
 | 20837 | tomcat     | 7.0.28       |
 | 21651 | nodejs     | 5.7.0        |
 | 10029 | debian     | 7.8          |
-| 27032 | debian     | 7.9          |
-| 27033 | debian     | 7.9-common   |
-| 20182 | javaweb    | latest       |
 | 20838 | django     | 1.9.1        |
 | 20836 | jdk        | 1.7.0_03     |
 | 20834 | jenkins    | 1.642.1      |
@@ -228,9 +218,6 @@ root@debian-test-master:~/comb_client# ./comb.py   container-image-list
 | 20835 | nginx      | 1.2.1        |
 | 10036 | redis      | 2.8.4        |
 | 1003  | ubuntu     | 14.04        |
-| 27062 | ubuntu     | 14.04-common |
-| 20769 | ubuntu     | 15.04        |
-| 20770 | ubuntu     | 16.04        |
 | 38664 | wordpress  | 4.5.2        |
 +-------+------------+--------------+
 ```
@@ -239,7 +226,7 @@ root@debian-test-master:~/comb_client# ./comb.py   container-image-list
 ### 镜像列表
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py repositories-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py repositories-list
 
 +-----------+-------------+-------------+--------------+-------------+----------------------+
 | repo_id   | user_name   | repo_name   | open_level   | tag_count   | updated_at           |
@@ -255,7 +242,7 @@ root@debian-test-master:~/comb_client# ./comb.py repositories-list
 ### 查询镜像详情
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py repositories-show 5331
+hzhuangzhexiao@debian:~/comb_client# ./comb.py repositories-show 5331
 +-------------+----------------------+
 | Field       | Value                |
 |-------------+----------------------|
@@ -280,10 +267,10 @@ root@debian-test-master:~/comb_client# ./comb.py repositories-show 5331
 ### 批量创建
 
 ```
-root@debian-test-master:~/comb_client# for i in $(seq 1 5); do ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testCentos$i ; done
+hzhuangzhexiao@debian:~/comb_client# for i in $(seq 1 5); do ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id 10005 --name testCentos$i ; done
 
 
-root@debian-test-master:~/comb_client# ./comb.py container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py container-list
 +--------+-------------+-------------+---------------+------------+
 | id     | name        | status      | public_ip     | image_id   |
 |--------+-------------+-------------+---------------+------------|
@@ -303,9 +290,9 @@ root@debian-test-master:~/comb_client# ./comb.py container-list
 ### 批量删除名字中含有testNew的容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py container-list |grep testNew |awk '{print $2}' | xargs -n 1 ./comb.py container-delete 
+hzhuangzhexiao@debian:~/comb_client# ./comb.py container-list |grep testNew |awk '{print $2}' | xargs -n 1 ./comb.py container-delete 
 
-root@debian-test-master:~/comb_client# ./comb.py container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py container-list
 +--------+-------------+-------------+---------------+------------+
 | id     | name        | status      | public_ip     | image_id   |
 |--------+-------------+-------------+---------------+------------|
@@ -323,8 +310,8 @@ root@debian-test-master:~/comb_client# ./comb.py container-list
 ### 批量删除所有使用centos 6.7 镜像创建的容器
 
 ```
-root@debian-test-master:~/comb_client# ./comb.py container-list |grep 10005  |awk '{print $2}' | xargs -n 1 ./comb.py container-delete 
-root@debian-test-master:~/comb_client# ./comb.py container-list
+hzhuangzhexiao@debian:~/comb_client# ./comb.py container-list |grep 10005  |awk '{print $2}' | xargs -n 1 ./comb.py container-delete 
+hzhuangzhexiao@debian:~/comb_client# ./comb.py container-list
 +--------+--------+-------------+---------------+------------+
 | id     | name   | status      | public_ip     | image_id   |
 |--------+--------+-------------+---------------+------------|
@@ -334,4 +321,73 @@ root@debian-test-master:~/comb_client# ./comb.py container-list
 
 ```
 
+### 面向开发者的 workflow
+
+通过comb cli，你可以直接在开发机器上保存镜像，推送到蜂巢，然后根据镜像的image id
+直接构建蜂巢容器。甚至不需要登录到web端进行操作。
+
+```
+docker login -u YOUR_ACCOUNT -p YOUR_PASSWD hub.c.163.com
+
+```
+
+列出本地的docker images。
+```
+hzhuangzhexiao@debian:~/comb_client# docker images
+REPOSITORY                                        TAG                 IMAGE ID            CREATED             SIZE
+jenserat/seafile                                  latest              95d48661ce75        1 months ago        362 MB
+ubuntu                                            14.04               e17b56e5200a        2 months ago        188 MB
+ubuntu                                            latest              e17b56e5200a        2 months ago        188 MB
+hub.c.163.com/fconline/shadowsocks               new                 c0ff81cd9b9c        3 months ago        363.2 MB
+
+
+hzhuangzhexiao@debian:~/comb_client# docker tag e17b56e5200a  hub.c.163.com/fcyiqiao/seafile:v1
+hzhuangzhexiao@debian:~/comb_client# docker push hub.c.163.com/fcyiqiao/seafile:v1
+The push refers to a repository [hub.c.163.com/fcyiqiao/seafile]
+5f70bf18a086: Pushed 
+d3492de15d7c: Pushed 
+01fbb4b5fa1b: Pushed 
+2a4049cf895d: Pushed 
+v1: digest: sha256:209272e2bd2678634c96999633c39e0ad7303f7d72793791f289f3c0b3cedf40 size: 4099
+hzhuangzhexiao@debian:~/comb_client# 
+
+```
+
+利用 comb client 进行镜像查询。可见我们刚才推送的镜像id为49475.
+```
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-image-list
++-------+------------+--------------+
+| id    | name       | tag          |
+|-------+------------+--------------|
+| 49475 | seafile    | v1           |
+| 22568 | minimal    | latest       |
+| 35630 | myss2-0528 | latest       |
+| 30656 | myss       | latest       |
+| 26413 | nagios     | v1           |
+| 22567 | aas        | latest       |
+| 21640 | mongodb    | 3.2.0        |
+| 21699 | postgres   | 9.5.1        |
+| 21697 | centos     | 6.5          |
+| 20769 | ubuntu     | 15.04        |
+| 20770 | ubuntu     | 16.04        |
+| 38664 | wordpress  | 4.5.2        |
++-------+------------+--------------+
+
+```
+
+
+利用镜像构建容器。
+```
+hzhuangzhexiao@debian:~/comb_client#  ./comb.py container-create --charge_type 1 --spec_id 1 --image_type 1 --image_id  49475  --name  testSeafile
+
+
+hzhuangzhexiao@debian:~/comb_client# ./comb.py  container-list
++--------+-------------+-------------+---------------+------------+
+| id     | name        | status      | public_ip     | image_id   |
+|--------+-------------+-------------+---------------+------------|
+| 637165 | testSeafile | create_succ | 59.111.91.82  | 49475      |
+| 628306 | test        | create_succ | 59.111.91.23  | 21697      |
++--------+-------------+-------------+---------------+------------+
+
+```
 

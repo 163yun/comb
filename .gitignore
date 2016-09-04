@@ -168,3 +168,6 @@ fabric.properties
 
 # *.iml
 # modules.xml
+
+# key
+auth.conf
