@@ -51,7 +51,14 @@ pip install tabulate
 
 蜂巢 API 需要使用 API Token 来发起 API 请求。 请到 https://c.163.com 页面登陆到你的账户，查看你的 Access Key 和 Access Secret。
 
+
+```
+cp auth.conf.sample auth.conf
+
+```
+
 然后编辑你的 `auth.conf` 文件，将`ACCESS_KEY`  和 `ACCESS_SECRET` 替换为你的即可。
+
 
 ```
 [DEFAULT]
