@@ -1,6 +1,8 @@
 
 # Netease-comb CLI 
 
+python 实现的网易蜂巢 API Client。
+
 ```
 hzhuangzhexiao@debian:~/comb_client# ./comb.py   
 Usage: comb.py [OPTIONS] COMMAND [ARGS]...
